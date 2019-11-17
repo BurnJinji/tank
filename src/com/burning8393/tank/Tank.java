@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class Tank {
     private static final int SPEED = 5;
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 50;
 
     private int x, y;
 
@@ -40,7 +42,7 @@ public class Tank {
         System.out.println("paint");
         Color c = g.getColor();
         g.setColor(Color.YELLOW);
-        g.fillRect(x, y, 50, 50);
+        g.fillRect(x, y, WIDTH, HEIGHT);
         g.setColor(c);
         move();
 
@@ -67,6 +69,8 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bullets.add(new Bullet(this.x, this.y, this.dir, tf));
+        int xBulletOffSet = WIDTH / 2;
+        int yBulletOffSet = WIDTH / 2;
+        tf.bullets.add(new Bullet(this.x + xBulletOffSet, this.y + yBulletOffSet, this.dir, tf));
     }
 }

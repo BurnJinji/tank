@@ -16,8 +16,11 @@ public class Bullet {
     private static final int WIDTH = 20, HEIGHT = 20;
 
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
-        this.x = x;
-        this.y = y;
+        int selfXOffSet = WIDTH / 2;
+        int selfYOffSet = HEIGHT / 2;
+
+        this.x = x - selfXOffSet;
+        this.y = y - selfYOffSet;
         this.dir = dir;
         this.tf = tf;
     }
