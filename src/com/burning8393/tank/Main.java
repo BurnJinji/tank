@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         TankFrame tankFrame = new TankFrame();
         while (true) {
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.MILLISECONDS.sleep(5);
             tankFrame.repaint();
         }
     }
