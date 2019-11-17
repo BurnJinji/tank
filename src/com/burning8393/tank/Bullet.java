@@ -9,12 +9,17 @@ public class Bullet {
 
     private Dir dir;
 
+    private boolean isAlive = true;
+
+    private TankFrame tf = null;
+
     private static final int WIDTH = 20, HEIGHT = 20;
 
-    public Bullet(int x, int y, Dir dir) {
+    public Bullet(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
 
     public void paint(Graphics g) {
@@ -28,6 +33,9 @@ public class Bullet {
     }
 
     private void move() {
+        if (!isAlive) {
+            tf.bullets.remove(this);
+        }
         switch (dir) {
             case LEFT:
                 x -= SPEED;
@@ -41,6 +49,10 @@ public class Bullet {
             case DOWN:
                 y += SPEED;
                 break;
+        }
+
+        if (this.x < 0 || this.y < 0 || this.x > TankFrame.GAME_WIDTH || this.y > TankFrame.GAME_HEIGHT) {
+            this.isAlive = false;
         }
     }
 }
