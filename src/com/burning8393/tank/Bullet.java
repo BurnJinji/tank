@@ -26,19 +26,28 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        System.out.println("paint");
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+        if (!isAlive) {
+            tf.bullets.remove(this);
+        }
+        switch (dir) {
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR, x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.bulletU, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD, x, y, null);
+                break;
+        }
         move();
 
     }
 
     private void move() {
-        if (!isAlive) {
-            tf.bullets.remove(this);
-        }
         switch (dir) {
             case LEFT:
                 x -= SPEED;
