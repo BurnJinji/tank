@@ -13,7 +13,9 @@ public class Bullet {
 
     private boolean isAlive = true;
 
-    private TankFrame tf = null;
+    private Rectangle rect = new Rectangle();
+
+    private TankFrame tf;
 
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
@@ -25,6 +27,9 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        this.rect.width = WIDTH;
+        this.rect.height = HEIGHT;
+        updateRect();
     }
 
     public Group getGroup() {
@@ -68,6 +73,7 @@ public class Bullet {
                 y += SPEED;
                 break;
         }
+        updateRect();
 
         if (this.x < 0 || this.y < 0 || this.x > TankFrame.GAME_WIDTH || this.y > TankFrame.GAME_HEIGHT) {
             this.isAlive = false;
@@ -76,9 +82,7 @@ public class Bullet {
 
     public void collideWith(Tank tank) {
         if (getGroup() == tank.getGroup()) return;
-        Rectangle rect1 = new Rectangle(this.x, this.y, this.WIDTH, this.HEIGHT);
-        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-        if (rect1.intersects(rect2)) {
+        if (rect.intersects(tank.getRect())) {
             this.die();
             tank.die();
             int eX =  tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
@@ -90,4 +94,10 @@ public class Bullet {
     private void die() {
         this.isAlive = false;
     }
+
+    private void updateRect() {
+        rect.x = this.x;
+        rect.y = this.y;
+    }
+
 }

@@ -20,6 +20,8 @@ public class Tank {
 
     private boolean isAlive = true;
 
+    private Rectangle rect = new Rectangle();
+
     private TankFrame tf;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
@@ -28,6 +30,9 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        this.rect.width = WIDTH;
+        this.rect.height = HEIGHT;
+        updateRect();
     }
 
     public int getX() {
@@ -56,6 +61,10 @@ public class Tank {
 
     public Group getGroup() {
         return group;
+    }
+
+    public Rectangle getRect() {
+        return rect;
     }
 
     public void paint(Graphics g) {
@@ -106,14 +115,17 @@ public class Tank {
         if (r.nextInt(100) > 95 && this.getGroup() == Group.BAD) {
             randomMove();
         }
-        edgeDetect();
+
+        boundCheck();
+
+        updateRect();
     }
 
     private void randomMove() {
         dir = Dir.values()[r.nextInt(4)];
     }
 
-    private void edgeDetect() {
+    private void boundCheck() {
         if (this.x < 2) x = 2;
         if (this.y < 28) y = 28;
         if (this.x > TankFrame.GAME_WIDTH- Tank.WIDTH -2) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
@@ -130,4 +142,10 @@ public class Tank {
     public void die() {
         this.isAlive = false;
     }
+
+    private void updateRect() {
+        rect.x = this.x;
+        rect.y = this.y;
+    }
+
 }
