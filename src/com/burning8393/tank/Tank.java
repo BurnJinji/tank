@@ -1,26 +1,31 @@
 package com.burning8393.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Tank {
-    private static final int SPEED = 5;
+    private static final int SPEED = 1;
     public static final int WIDTH = ResourceMgr.tankD.getWidth();
     public static final int HEIGHT = ResourceMgr.tankD.getWidth();
+    private static Random r = new Random();
 
     private int x, y;
 
     private Dir dir;
 
-    private boolean moving = false;
+    private Group group;
+
+    private boolean moving = true;
 
     private boolean isAlive = true;
 
     private TankFrame tf = null;
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -46,6 +51,10 @@ public class Tank {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    public Group getGroup() {
+        return group;
     }
 
     public void paint(Graphics g) {
@@ -89,12 +98,18 @@ public class Tank {
                 y += SPEED;
                 break;
         }
+
+        if (r.nextInt(10) > 8 && this.getGroup() == Group.BAD) {
+            this.fire();
+        }
+
+
     }
 
     public void fire() {
         int bx =  x + WIDTH / 2 - Bullet.WIDTH / 2;
         int by =  y + HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tf.bullets.add(new Bullet(bx, by, this.dir, tf));
+        tf.bullets.add(new Bullet(bx, by, this.dir, this.group, tf));
     }
 
     public void die() {
