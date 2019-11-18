@@ -11,7 +11,6 @@ import java.util.List;
 public class TankFrame extends Frame {
     public static final int GAME_WIDTH = 1080;
     public static final int GAME_HEIGHT = 960;
-    public static final int LEFT_EDGE = 0, UP_EDGE = 20;
     Tank mainTank = new Tank(200, 400, Dir.UP, Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> enemies = new ArrayList<>();
@@ -59,6 +58,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("子弹的数量:" + bullets.size(), 10, 60);
         g.drawString("敌人的数量:" + enemies.size(), 10, 80);
+        g.drawString("爆炸的数量:" + explodes.size(), 10, 100);
         g.setColor(c);
         mainTank.paint(g);
         for (int i = 0; i < bullets.size(); i++) {
@@ -69,14 +69,15 @@ public class TankFrame extends Frame {
             enemies.get(i).paint(g);
         }
 
+        // collide detect
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
+        }
+
         for (int i = 0; i < bullets.size(); i++) {
             for (int j = 0; j < enemies.size(); j++) {
                 bullets.get(i).collideWith(enemies.get(j));
             }
-        }
-
-        for (int i = 0; i < explodes.size(); i++) {
-            explodes.get(i).paint(g);
         }
 
     }
@@ -140,13 +141,14 @@ public class TankFrame extends Frame {
         private void setMainTankDir() {
             if (!bU && !bR && !bL && !bD) {
                 mainTank.setMoving(false);
+                return;
             } else {
+                if (bL)  mainTank.setDir(Dir.LEFT);
+                if (bR)  mainTank.setDir(Dir.RIGHT);
+                if (bU)  mainTank.setDir(Dir.UP);
+                if (bD)  mainTank.setDir(Dir.DOWN);
                 mainTank.setMoving(true);
             }
-            if (bL)  mainTank.setDir(Dir.LEFT);
-            if (bR)  mainTank.setDir(Dir.RIGHT);
-            if (bU)  mainTank.setDir(Dir.UP);
-            if (bD)  mainTank.setDir(Dir.DOWN);
         }
 
     }
