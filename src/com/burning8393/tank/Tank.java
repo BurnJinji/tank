@@ -4,9 +4,11 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tank {
-    private static final int SPEED = 1;
+    private static final int SPEED = 10;
     public static final int WIDTH = ResourceMgr.tankD.getWidth();
     public static final int HEIGHT = ResourceMgr.tankD.getWidth();
+
+    private long nextChangeMovingTime = System.currentTimeMillis();
     private static Random r = new Random();
 
     private int x, y;
@@ -102,8 +104,48 @@ public class Tank {
         if (r.nextInt(10) > 8 && this.getGroup() == Group.BAD) {
             this.fire();
         }
+        randomMove();
+        edgeDetect();
+    }
 
+    private void randomMove() {
+        if (this.getGroup() == Group.GOOD) return;
+        if (System.currentTimeMillis() < nextChangeMovingTime) {
+            return;
+        }
+        int duration = r.nextInt(10000);
+        nextChangeMovingTime = System.currentTimeMillis() + duration;
+        int dirNum = r.nextInt(4);
+        switch (dirNum) {
+            case 0:
+                dir = Dir.DOWN;
+                break;
+            case 1:
+                dir = Dir.UP;
+                break;
+            case 2:
+                dir = Dir.LEFT;
+                break;
+            case 3:
+                dir = Dir.RIGHT;
+                break;
+        }
+    }
 
+    private void edgeDetect() {
+        if (this.dir == Dir.UP && this.y <= TankFrame.UP_EDGE) {
+            if (this.group == Group.GOOD) this.y = TankFrame.UP_EDGE;
+            else this.dir = Dir.DOWN;
+        } else if (this.dir == Dir.DOWN && (this.y + HEIGHT) >= TankFrame.GAME_HEIGHT) {
+            if (this.group == Group.GOOD) this.y = TankFrame.GAME_HEIGHT - HEIGHT;
+            else this.dir = Dir.UP;
+        } else if (this.dir == Dir.LEFT && this.x <= TankFrame.LEFT_EDGE) {
+            if (this.group == Group.GOOD) this.x = TankFrame.LEFT_EDGE;
+            else this.dir = Dir.RIGHT;
+        } else if (this.dir == Dir.RIGHT && (this.x + WIDTH) >= TankFrame.GAME_WIDTH) {
+            if (this.group == Group.GOOD) this.x = TankFrame.GAME_WIDTH - WIDTH;
+            else this.dir = Dir.LEFT;
+        }
     }
 
     public void fire() {

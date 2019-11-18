@@ -3,7 +3,7 @@ package com.burning8393.tank;
 import java.awt.*;
 
 public class Bullet {
-    private static final int SPEED = 10;
+    private static final int SPEED = 30;
 
     private int x, y;
 
