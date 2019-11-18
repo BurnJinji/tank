@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TankFrame extends Frame {
-    public static final int GAME_WIDTH = 800;
-    public static final int GAME_HEIGHT = 600;
+    public static final int GAME_WIDTH = 1080;
+    public static final int GAME_HEIGHT = 960;
     public static final int LEFT_EDGE = 0, UP_EDGE = 20;
     Tank mainTank = new Tank(200, 400, Dir.UP, Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>();
@@ -92,21 +92,24 @@ public class TankFrame extends Frame {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                     bU = true;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_DOWN:
                     bD = true;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_LEFT:
                     bL = true;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_RIGHT:
                     bR = true;
+                    setMainTankDir();
                     break;
                 default:
                     break;
             }
-
-            setMainTankDir();
+            new Thread(()->new Audio("audio/tank_move.wav").play()).start();
         }
 
         @Override

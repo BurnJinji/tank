@@ -21,7 +21,7 @@ public class Tank {
 
     private boolean isAlive = true;
 
-    private TankFrame tf = null;
+    private TankFrame tf;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -152,6 +152,7 @@ public class Tank {
         int bx =  x + WIDTH / 2 - Bullet.WIDTH / 2;
         int by =  y + HEIGHT / 2 - Bullet.HEIGHT / 2;
         tf.bullets.add(new Bullet(bx, by, this.dir, this.group, tf));
+        if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
 
     public void die() {
