@@ -11,8 +11,9 @@ import java.util.List;
 public class TankFrame extends Frame {
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
-    Tank mainTank = new Tank(200, 200, Dir.DOWN, this);
+    Tank mainTank = new Tank(200, 400, Dir.DOWN, this);
     List<Bullet> bullets = new ArrayList<>();
+    List<Tank> enemies = new ArrayList<>();
     public TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
@@ -54,6 +55,10 @@ public class TankFrame extends Frame {
         mainTank.paint(g);
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
+        }
+
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).paint(g);
         }
     }
 
