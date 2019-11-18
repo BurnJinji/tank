@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class Tank {
     private static final int SPEED = 5;
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 50;
+    public static final int WIDTH = ResourceMgr.tankD.getWidth();
+    public static final int HEIGHT = ResourceMgr.tankD.getWidth();
 
     private int x, y;
 
@@ -79,8 +79,8 @@ public class Tank {
     }
 
     public void fire() {
-        int xBulletOffSet = WIDTH / 2;
-        int yBulletOffSet = HEIGHT / 2;
-        tf.bullets.add(new Bullet(this.x + xBulletOffSet, this.y + yBulletOffSet, this.dir, tf));
+        int bx =  x + WIDTH / 2 - Bullet.WIDTH / 2;
+        int by =  y + HEIGHT / 2 - Bullet.HEIGHT / 2;
+        tf.bullets.add(new Bullet(bx, by, this.dir, tf));
     }
 }

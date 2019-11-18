@@ -13,14 +13,13 @@ public class Bullet {
 
     private TankFrame tf = null;
 
-    private static final int WIDTH = 20, HEIGHT = 20;
+    public static final int WIDTH = ResourceMgr.bulletD.getWidth();
+    public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
 
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
-        int selfXOffSet = WIDTH / 2;
-        int selfYOffSet = HEIGHT / 2;
 
-        this.x = x - selfXOffSet;
-        this.y = y - selfYOffSet;
+        this.x = x;
+        this.y = y ;
         this.dir = dir;
         this.tf = tf;
     }
