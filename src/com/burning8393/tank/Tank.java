@@ -1,11 +1,13 @@
 package com.burning8393.tank;
 
+import com.burning8393.tank.abstractfactory.BaseTank;
 import com.burning8393.tank.fire.FireStrategy;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends BaseTank {
     private static final int SPEED = PropertyMgr.getInt("tankSpeed");
     public static final int WIDTH = ResourceMgr.goodTankD.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankD.getWidth();
@@ -40,12 +42,13 @@ public class Tank {
         try {
             if (this.group == Group.GOOD) {
                 String goodFS = (String) PropertyMgr.get("goodFS");
-                this.fs = (FireStrategy) Class.forName(goodFS).newInstance();
+                this.fs = (FireStrategy) Class.forName(goodFS).getDeclaredConstructor().newInstance();
             } else {
                 String badFS = (String) PropertyMgr.get("badFS");
-                this.fs = (FireStrategy) Class.forName(badFS).newInstance();
+                this.fs = (FireStrategy) Class.forName(badFS).getDeclaredConstructor().newInstance();
             }
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+        } catch (InstantiationException | IllegalAccessException
+                | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
         updateRect();

@@ -1,5 +1,7 @@
 package com.burning8393.tank;
 
+import com.burning8393.tank.abstractfactory.*;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -11,10 +13,12 @@ import java.util.List;
 public class TankFrame extends Frame {
     public static final int GAME_WIDTH = PropertyMgr.getInt("gameWidth");
     public static final int GAME_HEIGHT = PropertyMgr.getInt("gameHeight");
-    Tank mainTank = new Tank(200, 400, Dir.UP, Group.GOOD, this);
-    List<Bullet> bullets = new ArrayList<>();
-    List<Tank> enemies = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+    Tank mainTank = new Tank(200, 400,Dir.UP, Group.GOOD, this);
+    public List<BaseBullet> bullets = new ArrayList<>();
+    public List<BaseTank> enemies = new ArrayList<>();
+    public List<BaseExplode> explodes = new ArrayList<>();
+
+    public GameFactory gf = RectGameFactory.getInstance();
 
     {
         mainTank.setMoving(false);

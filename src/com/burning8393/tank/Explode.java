@@ -1,15 +1,17 @@
 package com.burning8393.tank;
 
+import com.burning8393.tank.abstractfactory.BaseExplode;
+
 import java.awt.*;
 
-public class Explode {
+public class Explode extends BaseExplode {
     private int x, y;
 
     private boolean isAlive = true;
 
     private TankFrame tf = null;
 
-    private int step;
+    private int step = 0;
 
     public static final int WIDTH = ResourceMgr.explodes[0].getWidth();
     public static final int HEIGHT = ResourceMgr.explodes[0].getHeight();

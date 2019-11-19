@@ -1,11 +1,10 @@
-package com.burning8393.tank;
+package com.burning8393.tank.abstractfactory;
 
-import com.burning8393.tank.abstractfactory.BaseBullet;
-import com.burning8393.tank.abstractfactory.BaseTank;
+import com.burning8393.tank.*;
 
 import java.awt.*;
 
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet {
     private static final int SPEED = PropertyMgr.getInt("bulletSpeed");
 
     private int x, y;
@@ -23,7 +22,7 @@ public class Bullet extends BaseBullet {
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tf) {
 
         this.x = x;
         this.y = y ;
@@ -44,20 +43,12 @@ public class Bullet extends BaseBullet {
         if (!isAlive) {
             tf.bullets.remove(this);
         }
-        switch (dir) {
-            case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x, y, null);
-                break;
-            case UP:
-                g.drawImage(ResourceMgr.bulletU, x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x, y, null);
-                break;
-        }
+
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
+        g.fillRect(x, y, 20, 20);
+        g.setColor(c);
+
         move();
 
     }
@@ -103,5 +94,4 @@ public class Bullet extends BaseBullet {
         rect.x = this.x;
         rect.y = this.y;
     }
-
 }
