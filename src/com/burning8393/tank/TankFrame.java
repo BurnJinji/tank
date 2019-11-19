@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TankFrame extends Frame {
-    public static final int GAME_WIDTH = 1080;
-    public static final int GAME_HEIGHT = 960;
+    public static final int GAME_WIDTH = PropertyMgr.getInt("gameWidth");
+    public static final int GAME_HEIGHT = PropertyMgr.getInt("gameHeight");
     Tank mainTank = new Tank(200, 400, Dir.UP, Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> enemies = new ArrayList<>();

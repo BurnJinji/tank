@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tank {
-    private static final int SPEED = 10;
+    private static final int SPEED = PropertyMgr.getInt("tankSpeed");
     public static final int WIDTH = ResourceMgr.goodTankD.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankD.getWidth();
 
@@ -45,11 +45,7 @@ public class Tank {
                 String badFS = (String) PropertyMgr.get("badFS");
                 this.fs = (FireStrategy) Class.forName(badFS).newInstance();
             }
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         updateRect();
