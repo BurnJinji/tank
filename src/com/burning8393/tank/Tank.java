@@ -1,5 +1,7 @@
 package com.burning8393.tank;
 
+import com.burning8393.tank.fire.FireStrategy;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -24,6 +26,8 @@ public class Tank {
 
     private TankFrame tf;
 
+    private FireStrategy fs;
+
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
@@ -32,6 +36,22 @@ public class Tank {
         this.tf = tf;
         this.rect.width = WIDTH;
         this.rect.height = HEIGHT;
+
+        try {
+            if (this.group == Group.GOOD) {
+                String goodFS = (String) PropertyMgr.get("goodFS");
+                this.fs = (FireStrategy) Class.forName(goodFS).newInstance();
+            } else {
+                String badFS = (String) PropertyMgr.get("badFS");
+                this.fs = (FireStrategy) Class.forName(badFS).newInstance();
+            }
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         updateRect();
     }
 
@@ -65,6 +85,10 @@ public class Tank {
 
     public Rectangle getRect() {
         return rect;
+    }
+
+    public TankFrame getTf() {
+        return tf;
     }
 
     public void paint(Graphics g) {
@@ -133,10 +157,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bx =  x + WIDTH / 2 - Bullet.WIDTH / 2;
-        int by =  y + HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tf.bullets.add(new Bullet(bx, by, this.dir, this.group, tf));
-        if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+        fs.fire(this);
     }
 
     public void die() {

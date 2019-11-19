@@ -30,6 +30,7 @@ public class Bullet {
         this.rect.width = WIDTH;
         this.rect.height = HEIGHT;
         updateRect();
+        tf.bullets.add(this);
     }
 
     public Group getGroup() {
