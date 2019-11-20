@@ -5,19 +5,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TankFrame extends Frame {
     public static final int GAME_WIDTH = PropertyMgr.getInt("gameWidth");
     public static final int GAME_HEIGHT = PropertyMgr.getInt("gameHeight");
-    Tank mainTank = new Tank(200, 400, Dir.UP, Group.GOOD, this);
-    List<Bullet> bullets = new ArrayList<>();
-    List<Tank> enemies = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+    GameModel gm = GameModel.getInstance();
 
     {
-        mainTank.setMoving(false);
+        gm.getMainTank().setMoving(false);
     }
 
     public TankFrame() {
@@ -54,31 +49,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹的数量:" + bullets.size(), 10, 60);
-        g.drawString("敌人的数量:" + enemies.size(), 10, 80);
-        g.drawString("爆炸的数量:" + explodes.size(), 10, 100);
-        g.setColor(c);
-        mainTank.paint(g);
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paint(g);
-        }
-
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).paint(g);
-        }
-
-        // collide detect
-        for (int i = 0; i < explodes.size(); i++) {
-            explodes.get(i).paint(g);
-        }
-
-        for (int i = 0; i < bullets.size(); i++) {
-            for (int j = 0; j < enemies.size(); j++) {
-                bullets.get(i).collideWith(enemies.get(j));
-            }
-        }
+        gm.paint(g);
 
     }
 
@@ -129,7 +100,7 @@ public class TankFrame extends Frame {
                     bR = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    mainTank.fire();
+                    gm.getMainTank().fire();
                     break;
                 default:
                     break;
@@ -139,6 +110,7 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
+            Tank mainTank = gm.getMainTank();
             if (!bU && !bR && !bL && !bD) {
                 mainTank.setMoving(false);
                 return;

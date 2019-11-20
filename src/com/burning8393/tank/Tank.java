@@ -24,16 +24,16 @@ public class Tank {
 
     private Rectangle rect = new Rectangle();
 
-    private TankFrame tf;
+    private GameModel gm;
 
     private FireStrategy fs;
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tf;
+        this.gm = gm;
         this.rect.width = WIDTH;
         this.rect.height = HEIGHT;
 
@@ -83,13 +83,13 @@ public class Tank {
         return rect;
     }
 
-    public TankFrame getTf() {
-        return tf;
+    public GameModel getGm() {
+        return gm;
     }
 
     public void paint(Graphics g) {
         if (!isAlive) {
-            this.tf.enemies.remove(this);
+            this.gm.enemies.remove(this);
         }
         switch (dir) {
             case LEFT:
