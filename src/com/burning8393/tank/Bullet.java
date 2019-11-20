@@ -2,7 +2,7 @@ package com.burning8393.tank;
 
 import java.awt.*;
 
-public class Bullet {
+public class Bullet extends GameObject {
     private static final int SPEED = PropertyMgr.getInt("bulletSpeed");
 
     private int x, y;
@@ -23,23 +23,27 @@ public class Bullet {
     public Bullet(int x, int y, Dir dir, Group group, GameModel tf) {
 
         this.x = x;
-        this.y = y ;
+        this.y = y;
         this.dir = dir;
         this.group = group;
         this.gm = tf;
         this.rect.width = WIDTH;
         this.rect.height = HEIGHT;
         updateRect();
-        tf.bullets.add(this);
+        tf.objects.add(this);
     }
 
     public Group getGroup() {
         return group;
     }
 
+    public Rectangle getRect() {
+        return rect;
+    }
+
     public void paint(Graphics g) {
         if (!isAlive) {
-            gm.bullets.remove(this);
+            gm.objects.remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -81,18 +85,7 @@ public class Bullet {
         }
     }
 
-    public void collideWith(Tank tank) {
-        if (getGroup() == tank.getGroup()) return;
-        if (rect.intersects(tank.getRect())) {
-            this.die();
-            tank.die();
-            int eX =  tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
-            int eY =  tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            gm.explodes.add(new Explode(eX, eY, gm));
-        }
-    }
-
-    private void die() {
+    public void die() {
         this.isAlive = false;
     }
 

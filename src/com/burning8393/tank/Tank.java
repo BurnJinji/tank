@@ -5,7 +5,7 @@ import com.burning8393.tank.fire.FireStrategy;
 import java.awt.*;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends GameObject {
     private static final int SPEED = PropertyMgr.getInt("tankSpeed");
     public static final int WIDTH = ResourceMgr.goodTankD.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankD.getWidth();
@@ -13,6 +13,8 @@ public class Tank {
     private static Random r = new Random();
 
     private int x, y;
+
+    private int preX, preY;
 
     private Dir dir;
 
@@ -89,7 +91,7 @@ public class Tank {
 
     public void paint(Graphics g) {
         if (!isAlive) {
-            this.gm.enemies.remove(this);
+            this.gm.objects.remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -110,10 +112,17 @@ public class Tank {
 
     }
 
+    public void backPos() {
+        x = preX;
+        y = preY;
+    }
+
     private void move() {
         if (!isMoving()) {
             return;
         }
+        preX = x;
+        preY = y;
         switch (dir) {
             case LEFT:
                 x -= SPEED;
