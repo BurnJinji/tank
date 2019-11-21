@@ -1,8 +1,13 @@
 package com.burning8393.tank;
 
 import com.burning8393.tank.fire.FireStrategy;
+import com.burning8393.tank.observer.TankFireEvent;
+import com.burning8393.tank.observer.TankFireHandler;
+import com.burning8393.tank.observer.TankFireObserver;
 
 import java.awt.*;
+import java.util.List;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Tank extends GameObject {
@@ -176,4 +181,12 @@ public class Tank extends GameObject {
         rect.y = this.y;
     }
 
+    private List<TankFireObserver> observers = Arrays.asList(new TankFireHandler());
+
+    public void emitFireEvent() {
+        TankFireEvent tankFireEvent = new TankFireEvent(this);
+        for (TankFireObserver observer : observers) {
+            observer.actionOnFire(tankFireEvent);
+        }
+    }
 }
