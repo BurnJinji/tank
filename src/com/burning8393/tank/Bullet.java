@@ -5,8 +5,6 @@ import java.awt.*;
 public class Bullet extends GameObject {
     private static final int SPEED = PropertyMgr.getInt("bulletSpeed");
 
-    private int x, y;
-
     private Dir dir;
 
     private Group group;
@@ -36,6 +34,16 @@ public class Bullet extends GameObject {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     public Group getGroup() {

@@ -16,12 +16,24 @@ public class Wall extends GameObject {
         GameModel.getInstance().add(this);
     }
 
+    @Override
     public int getX() {
         return this.x;
     }
 
+    @Override
     public int getY() {
         return this.y;
+    }
+
+    @Override
+    public int getWidth() {
+        return w;
+    }
+
+    @Override
+    public int getHeight() {
+        return h;
     }
 
     public int getW() {

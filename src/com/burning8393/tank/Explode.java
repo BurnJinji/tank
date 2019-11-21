@@ -3,7 +3,6 @@ package com.burning8393.tank;
 import java.awt.*;
 
 public class Explode extends GameObject {
-    private int x, y;
 
     private boolean isAlive = true;
 
@@ -27,5 +26,25 @@ public class Explode extends GameObject {
             GameModel.getInstance().remove(this);
         }
 
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 }

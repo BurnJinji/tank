@@ -12,8 +12,6 @@ public class Tank extends GameObject {
 
     private static Random r = new Random();
 
-    private int x, y;
-
     private int preX, preY;
 
     private Dir dir;
@@ -57,6 +55,16 @@ public class Tank extends GameObject {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     public Dir getDir() {
