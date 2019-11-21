@@ -26,16 +26,13 @@ public class Tank extends GameObject {
 
     private Rectangle rect = new Rectangle();
 
-    private GameModel gm;
-
     private FireStrategy fs;
 
-    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Tank(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
         this.rect.width = WIDTH;
         this.rect.height = HEIGHT;
 
@@ -51,6 +48,7 @@ public class Tank extends GameObject {
             e.printStackTrace();
         }
         updateRect();
+        GameModel.getInstance().add(this);
     }
 
     public int getX() {
@@ -85,13 +83,9 @@ public class Tank extends GameObject {
         return rect;
     }
 
-    public GameModel getGm() {
-        return gm;
-    }
-
     public void paint(Graphics g) {
         if (!isAlive) {
-            this.gm.objects.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir) {
             case LEFT:

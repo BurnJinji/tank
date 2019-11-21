@@ -15,22 +15,27 @@ public class Bullet extends GameObject {
 
     private Rectangle rect = new Rectangle();
 
-    private GameModel gm;
-
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel tf) {
+    public Bullet(int x, int y, Dir dir, Group group) {
 
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = tf;
         this.rect.width = WIDTH;
         this.rect.height = HEIGHT;
         updateRect();
-        tf.objects.add(this);
+        GameModel.getInstance().add(this);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public Group getGroup() {
@@ -43,7 +48,7 @@ public class Bullet extends GameObject {
 
     public void paint(Graphics g) {
         if (!isAlive) {
-            gm.objects.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir) {
             case LEFT:
