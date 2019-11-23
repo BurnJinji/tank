@@ -59,23 +59,26 @@ public class TankFrame extends Frame {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                     bU = true;
-                    setMainTankDir();
                     break;
                 case KeyEvent.VK_DOWN:
                     bD = true;
-                    setMainTankDir();
                     break;
                 case KeyEvent.VK_LEFT:
                     bL = true;
-                    setMainTankDir();
                     break;
                 case KeyEvent.VK_RIGHT:
                     bR = true;
-                    setMainTankDir();
+                    break;
+                case KeyEvent.VK_S:
+                    GameModel.getInstance().save();
+                    break;
+                case KeyEvent.VK_L:
+                    GameModel.getInstance().load();
                     break;
                 default:
                     break;
             }
+            setMainTankDir();
             new Thread(()->new Audio("audio/tank_move.wav").play()).start();
         }
 
